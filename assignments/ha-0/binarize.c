@@ -9,28 +9,25 @@ void binarize_unsigned(unsigned long long x) {
     }
 
     unsigned long long temp;    // Temporary variable for division result
-    unsigned short sep = 1;     // Space separator counter
+    unsigned short delimiter = 1;     // Space separator counter
 
     // Set number of bit blocks based on input value
-    unsigned int boundary = x > INT64_MAX ? 126 : x > INT32_MAX ? 62 : x > INT16_MAX ? 30 : x > INT8_MAX ? 14 : 6;
+    unsigned int bound = x > INT64_MAX ? 126 : x > INT32_MAX ? 62 : x > INT16_MAX ? 30 : x > INT8_MAX ? 14 : 6;
 
     // Leading sign zero
     printf("0");
 
     // Start division
-    for (int i = boundary; i >= 0; i--) {
+    for (int i = bound; i >= 0; i--) {
+
         temp = x >> i;
+        printf(temp & 1 ? "1" : "0");
 
-        if (temp & 1)
-            printf("1");
-        else
-            printf("0");
-
-        // Separator update
-        ++sep;
-        if (sep == 8) {
+        // Check for delimiter to print
+        ++delimiter;
+        if (delimiter == 8) {
             printf(" ");
-            sep = 0;
+            delimiter = 0;
         }
     }
 
@@ -72,7 +69,7 @@ void binarize_signed(signed long long x) {
     }
 
     // Add 1
-    unsigned int carry = 1;
+    unsigned int carry = 1;     // Carry adder
     for (int i = 0; i < bound - 1; ++i) {
         binary[i] = binary[i] ^ carry;
         carry == binary[i] & carry;
@@ -82,15 +79,62 @@ void binarize_signed(signed long long x) {
     unsigned int delimiter = 0;
     binary[bound - 1] = sign;
     for (int i = bound - 1; i >= 0; --i) {
+
+        printf("%i", binary[i]);
+
+        // Check for delimiter to print
+        ++delimiter;
+        if (delimiter == 8) {
+            printf(" ");
+            delimiter = 0;
+        }
+    }
+
+    // New line
+    printf("\n");
+}
+
+void binarize_unsigned_optimized(unsigned long long x) {
+
+    // Check for overflow
+    if (x > ((INT64_MAX << 1) + 1)) {
+        printf("Overflow\n");
+        return;
+    }
+
+    unsigned int bound = x > INT64_MAX ? 127 : x > INT32_MAX ? 63 : x > INT16_MAX ? 31 : x > INT8_MAX ? 15 : 7;
+    unsigned short delimiter = 1;
+    printf("0");
+    for (int i = bound - 1; 0 <= i; --i) {
         if (delimiter == 8) {
             printf(" ");
             delimiter = 0;
         }
         ++delimiter;
+        printf("%llx", (x >> i) & 0x01);
+    }
+    printf("\n");
+}
 
-        printf("%i", binary[i]);
+void binarize_signed_optimized(signed long long x) {
+
+    // Check for overflow
+    if (x > INT64_MAX) {
+        printf("Overflow\n");
+        return;
     }
 
-    // New line
+    signed long long modulo = llabs(x);
+    unsigned int bound = modulo > INT32_MAX ? 63 : modulo > INT16_MAX ? 31 : modulo > INT8_MAX ? 15 : 7;
+    unsigned short delimiter = 1;
+    printf(x >= 0 ? "0" : "1");
+    for (int i = bound - 1; 0 <= i; --i) {
+        if (delimiter == 8) {
+            printf(" ");
+            delimiter = 0;
+        }
+        ++delimiter;
+        printf("%llx", (x >> i) & 0x01);
+    }
     printf("\n");
 }
