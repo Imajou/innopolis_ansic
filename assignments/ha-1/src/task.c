@@ -166,7 +166,7 @@ int htoi(const char s[]) {
         else
             return 0;
 
-        result += ((1 << 4) << power) * temp;
+        result += pow(16, power) * temp;
         ++power;
     }
 

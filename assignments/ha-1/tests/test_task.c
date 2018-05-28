@@ -89,8 +89,6 @@ START_TEST (test_enter)
         ck_assert_str_eq(output_1, pattern_1);
         ck_assert_str_eq(output_2, pattern_2);
 
-        free(output_1);
-        free(output_2);
     }
 END_TEST
 
@@ -152,12 +150,12 @@ START_TEST (test_htoi)
         int output_5 = htoi(input_5);
         int output_6 = htoi(input_6);
 
-        ck_assert_str_eq(output_1, pattern_1);
-        ck_assert_str_eq(output_2, pattern_2);
-        ck_assert_str_eq(output_3, pattern_3);
-        ck_assert_str_eq(output_4, pattern_4);
-        ck_assert_str_eq(output_5, pattern_5);
-        ck_assert_str_eq(output_6, pattern_6);
+        ck_assert_int_eq(output_1, pattern_1);
+        ck_assert_int_eq(output_2, pattern_2);
+        ck_assert_int_eq(output_3, pattern_3);
+        ck_assert_int_eq(output_4, pattern_4);
+        ck_assert_int_eq(output_5, pattern_5);
+        ck_assert_int_eq(output_6, pattern_6);
     }
 END_TEST
 
@@ -202,16 +200,16 @@ START_TEST (test_any)
 
         const char input_3_1[] = "smallshaq";
         const char input_3_2[] = "oneplusone";
-        const int pattern_3 = 1;
+        const int pattern_3 = 0;
 
 
         int output_1 = any(input_1_1, input_1_2);
         int output_2 = any(input_2_1, input_2_2);
         int output_3 = any(input_3_1, input_3_2);
 
-        ck_assert_str_eq(output_1, pattern_1);
-        ck_assert_str_eq(output_2, pattern_2);
-        ck_assert_str_eq(output_3, pattern_3);
+        ck_assert_int_eq(output_1, pattern_1);
+        ck_assert_int_eq(output_2, pattern_2);
+        ck_assert_int_eq(output_3, pattern_3);
     }
 END_TEST
 
@@ -222,7 +220,7 @@ START_TEST (test_binsearch_unoptimized)
         const int len_1 = 5;
         const int pattern_1 = 2;
 
-        int input_2[] = {1, 1, 1, 1, 1};
+        int input_2[] = {1, 2, 4, 8, 16};
         const int x_2 = 1;
         const int len_2 = 5;
         const int pattern_2 = 0;
@@ -237,9 +235,9 @@ START_TEST (test_binsearch_unoptimized)
         int output_2 = binsearch_unoptimized(x_2, input_2, len_2);
         int output_3 = binsearch_unoptimized(x_3, input_3, len_3);
 
-        ck_assert_str_eq(output_1, pattern_1);
-        ck_assert_str_eq(output_2, pattern_2);
-        ck_assert_str_eq(output_3, pattern_3);
+        ck_assert_int_eq(output_1, pattern_1);
+        ck_assert_int_eq(output_2, pattern_2);
+        ck_assert_int_eq(output_3, pattern_3);
     }
 END_TEST
 
@@ -250,7 +248,7 @@ START_TEST (test_binsearch)
         const int len_1 = 5;
         const int pattern_1 = 2;
 
-        int input_2[] = {1, 1, 1, 1, 1};
+        int input_2[] = {1, 2, 4, 8, 16};
         const int x_2 = 1;
         const int len_2 = 5;
         const int pattern_2 = 0;
@@ -265,9 +263,9 @@ START_TEST (test_binsearch)
         int output_2 = binsearch(x_2, input_2, len_2);
         int output_3 = binsearch(x_3, input_3, len_3);
 
-        ck_assert_str_eq(output_1, pattern_1);
-        ck_assert_str_eq(output_2, pattern_2);
-        ck_assert_str_eq(output_3, pattern_3);
+        ck_assert_int_eq(output_1, pattern_1);
+        ck_assert_int_eq(output_2, pattern_2);
+        ck_assert_int_eq(output_3, pattern_3);
     }
 END_TEST
 
@@ -316,9 +314,9 @@ START_TEST (test_strrindex)
         int output_2 = strrindex(input_2_1, input_2_2);
         int output_3 = strrindex(input_3_1, input_3_2);
 
-        ck_assert_str_eq(output_1, pattern_1);
-        ck_assert_str_eq(output_2, pattern_2);
-        ck_assert_str_eq(output_3, pattern_3);
+        ck_assert_int_eq(output_1, pattern_1);
+        ck_assert_int_eq(output_2, pattern_2);
+        ck_assert_int_eq(output_3, pattern_3);
     }
 END_TEST
 

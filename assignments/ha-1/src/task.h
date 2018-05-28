@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "stdlib.h"
+#include <math.h>
 
 #ifndef ALLOCATE
 #define ALLOCATE(i)(malloc((i) * sizeof(char)))
