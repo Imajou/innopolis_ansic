@@ -41,6 +41,10 @@ int binsearch(int x, int v[], int n);
 
 char *escape(const char from[]);
 
+char *itoa(int n);
+
+char *itob(int n, int b);
+
 int strrindex(const char s[], const char t);
 
 #endif //HA_0_TASK_H

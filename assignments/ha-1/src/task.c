@@ -374,6 +374,78 @@ char *escape(const char from[]) {
 }
 
 /**
+ * Converts integer to its string representation
+ * @param n Integer to convert
+ * @return String with integer
+ */
+char *itoa(int n) {
+
+    char *result = ALLOCATE(33);
+
+    int negative = n < 0 ? 1 : 0;
+    if (negative) n = -n;
+    int k = 0;
+    do {
+        result[k++] = (char) (n % 10 + '0');
+    } while ((n /= 10) > 0);
+    if (negative) result[k++] = '-';
+    result[k] = '\0';
+
+    int len = 0;
+    STRING_LEN(len, result);
+    for (int i = 0, j = len - 1; i < j; i++, j--) {
+        char c = result[i];
+        result[i] = result[j];
+        result[j] = c;
+    }
+
+    return result;
+
+}
+
+/**
+ * Converts integer number {@param n} into the string representation of base {@param b}
+ * @param n Number to convert
+ * @param b Base
+ * @return String with represented number
+ */
+char *itob(int n, int b) {
+
+    if (b < 2 || b > 36) return "Invalid base\n";
+
+    char *result = ALLOCATE(33);
+
+    int m, negative;
+    negative = n < 0 ? 1 : 0;
+    if (negative) n = -n;
+
+    int k = 0;
+    do {
+        m = n % b;
+        if (m < 10) {
+            result[k++] = (char) (m + '0');
+        } else {
+            result[k++] = (char) (m + 'a' - 10);
+        }
+    } while ((n /= b) > 0);
+
+    if (negative)
+        result[k++] = '-';
+    result[k] = '\0';
+
+    int len = 0;
+    STRING_LEN(len, result);
+    for (int i = 0, j = len - 1; i < j; i++, j--) {
+        char c = result[i];
+        result[i] = result[j];
+        result[j] = c;
+    }
+
+    return result;
+
+}
+
+/**
  * Finds first rightmost occurrence of {@param t} in {@param s} and {@return int} index of the character, -1 if none
  * @param s String to search within
  * @param t Character to search in the string

@@ -295,6 +295,60 @@ START_TEST (test_escape)
     }
 END_TEST
 
+START_TEST (test_itoa)
+    {
+        const int input_1 = 255;
+        const char pattern_1[] = "255";
+
+        const int input_2 = -2147483647;
+        const char pattern_2[] = "-2147483647";
+
+        const int input_3 = 0;
+        const char pattern_3[] = "0";
+
+
+        char *output_1 = itoa(input_1);
+        char *output_2 = itoa(input_2);
+        char *output_3 = itoa(input_3);
+
+        ck_assert_str_eq(output_1, pattern_1);
+        ck_assert_str_eq(output_2, pattern_2);
+        ck_assert_str_eq(output_3, pattern_3);
+
+        free(output_1);
+        free(output_2);
+        free(output_3);
+    }
+END_TEST
+
+START_TEST (test_itob)
+    {
+        const int input_1_1 = 255;
+        const int input_1_2 = 16;
+        const char pattern_1[] = "ff";
+
+        const int input_2_1 = -2147483647;
+        const int input_2_2 = 8;
+        const char pattern_2[] = "-17777777777";
+
+        const int input_3_1 = 1337;
+        const int input_3_2 = 0;
+        const char pattern_3[] = "Invalid base\n";
+
+
+        char *output_1 = itob(input_1_1, input_1_2);
+        char *output_2 = itob(input_2_1, input_2_2);
+        char *output_3 = itob(input_3_1, input_3_2);
+
+        ck_assert_str_eq(output_1, pattern_1);
+        ck_assert_str_eq(output_2, pattern_2);
+        ck_assert_str_eq(output_3, pattern_3);
+
+        free(output_1);
+        free(output_2);
+    }
+END_TEST
+
 START_TEST (test_strrindex)
     {
         const char input_1_1[] = "never gonna give you up";
@@ -339,8 +393,8 @@ Suite *str_suite(void) {
     tcase_add_test(tcase, test_binsearch);
     tcase_add_test(tcase, test_escape);
     //tcase_add_test(tcase, test_expand);
-    //tcase_add_test(tcase, test_itoa);
-    //tcase_add_test(tcase, test_itob);
+    tcase_add_test(tcase, test_itoa);
+    tcase_add_test(tcase, test_itob);
     tcase_add_test(tcase, test_strrindex);
     //tcase_add_test(tcase, test_atofe);
 
