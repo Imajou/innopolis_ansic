@@ -14,4 +14,4 @@ add_executable(test_task test_task.c ../src/task.c)
 target_link_libraries(test_task ${CHECK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 #add_test(test_binarize ${CMAKE_CURRENT_BINARY_DIR}/test_binarize)
-add_test(test_tesk ${CMAKE_CURRENT_BINARY_DIR}/test_task)
+add_test(test_task ${CMAKE_CURRENT_BINARY_DIR}/test_task)
