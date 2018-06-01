@@ -1,50 +1,87 @@
 #include "stack.h"
 
-#define STEP 5
 #define LIMIT 50
 
-struct Stack {
-    int top;
-    unsigned capacity;
-    double *data;
+
+struct Node *STACK_ROOT = NULL;
+unsigned int size = 0;
+
+
+struct Node {
+    double value;
+    struct Node *next;
 };
 
-struct Stack *createStack() {
+/**
+ * Creates new node with data {@param value} and returns a pointer
+ * @param value Value to put in a new node
+ * @return Pointer to a new node
+ */
+struct Node *createNode(double value) {
+    struct Node *newNode =
+            (struct Node *) malloc(sizeof(struct Node));
+    newNode->value = value;
+    newNode->next = NULL;
 
-    struct Stack *stack = (struct Stack *) malloc(sizeof(struct Stack));
-
-    stack->top = -1;
-    stack->capacity = STEP;
-
-    stack->data = (double *) malloc(stack->capacity * sizeof(double));
-
-    return stack;
+    return newNode;
 }
 
-void destruct(struct Stack *stack) {
-    for (int i = stack->capacity; i >= 0; i--)
-        stack->data[i] = 0;
-
-    stack->data = (double *) malloc(STEP * sizeof(double));
-    stack->top = -1;
-}
-
-int isEmpty(struct Stack *stack) {
-    return stack->top == -1;
-}
-
-int push(struct Stack *stack, double value) {
-    if (stack->top - 1 == LIMIT) return 1;
-    if (stack->top == (stack->capacity) - 1) {
-        stack->data = (double *) realloc(stack->data, (stack->capacity + STEP) * sizeof(double));
-        stack->capacity += STEP;
+/**
+ * Pops a value from the top of the stack
+ * If stack is empty, prints an error message and returns minus infinity
+ * @return Top value or -INF if stack is empty
+ */
+double pop() {
+    if (!STACK_ROOT) {
+        printf("Stack is empty\n");
+        return -INFINITY;
     }
-    stack->data[++(stack->top)] = value;
+
+    struct Node *temp = STACK_ROOT;
+    STACK_ROOT = STACK_ROOT->next;
+    double popped = temp->value;
+    free(temp);
+
+    --size;
+    return popped;
+}
+
+/**
+ * Peeks a value from the top of the stack
+ * If stack is empty, prints an error message and returns minus infinity
+ * @return Top value or -INF if stack is empty
+ */
+double peek() {
+    if (!STACK_ROOT) {
+        printf("Stack is empty\n");
+        return -INFINITY;
+    }
+    return STACK_ROOT->value;
+}
+
+/**
+ * Pushes {@param value} to the top of the stack and {@return status} of pushing
+ * {@return 0} if everything is ok, {@return 1} if stack is full, {@return 2} if some error occurred
+ * @param value Value to push
+ * @return Status code
+ */
+int push(double value) {
+    if (size == LIMIT)
+        return 1;
+
+    struct Node *stackNode = createNode(value);
+    stackNode->next = STACK_ROOT;
+    STACK_ROOT = stackNode;
+
+    ++size;
+    if (peek() != value) return 2;
     return 0;
 }
-
-double pop(struct Stack *stack) {
-    if (isEmpty(stack))
-        return NULL;
-    return stack->data[stack->top--];
-}
+/*
+int main() {
+    printf("Pushed 1337 - return %i, pushed 228 - return %i\n", push(1337), push(228));
+    printf("Peeked %f, popped %f, popped %f\n", peek(), pop(), pop());
+    printf("Trying to pop... ");
+    printf("Return %f\n", pop());
+    return 0;
+}*/

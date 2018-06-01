@@ -6,12 +6,14 @@
 #define HA_2_STACK_H
 
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-int push(struct Stack *stack, double value);
+int push(double value);
 
-double pop(struct Stack *stack);
+double pop();
 
-double peek(struct Stack *stack);
+double peek();
 
 #endif //HA_2_STACK_H
