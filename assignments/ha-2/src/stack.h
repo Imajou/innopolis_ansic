@@ -5,10 +5,13 @@
 #ifndef HA_2_STACK_H
 #define HA_2_STACK_H
 
-int push(double value);
 
-double pop();
+#include <stdlib.h>
 
-double pick();
+int push(struct Stack *stack, double value);
+
+double pop(struct Stack *stack);
+
+double peek(struct Stack *stack);
 
 #endif //HA_2_STACK_H
