@@ -41,6 +41,7 @@ int insert(double value, int priority) {
 
     if (QUEUE_ROOT == NULL) {
         QUEUE_ROOT = createNode(value, priority);
+        ++size;
         return 0;
     }
 

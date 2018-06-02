@@ -3,7 +3,18 @@
 
 START_TEST (test_stub)
     {
-        ck_assert_int_eq(42, stub());
+
+        for (int i = 1; i <= 50; i++)
+            ck_assert_int_eq(push(i), 0);
+
+
+        ck_assert_int_eq(push(1337), 1);
+
+        for (int j = 50; j >= 1; --j) {
+            ck_assert_double_eq(peek(), (double) j);
+            ck_assert_double_eq(pop(), (double) j);
+        }
+
     }
 END_TEST
 
