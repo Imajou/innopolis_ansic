@@ -13,7 +13,7 @@ struct Node {
 };
 
 /**
- * Creates new node with data {@param value} and returns a pointer
+ * Creates new node with data {@param value} and returns a pointer to it
  * @param value Value to put in a new node
  * @return Pointer to a new node
  */
@@ -28,8 +28,8 @@ struct Node *createNode(double value) {
 
 /**
  * Pops a value from the top of the stack
- * If stack is empty, prints an error message and returns minus infinity
- * @return Top value or -INF if stack is empty
+ * If the stack is empty, prints an error message and returns minus infinity
+ * @return Top value or -INF if the stack is empty
  */
 double pop() {
     if (!STACK_ROOT) {
@@ -73,8 +73,9 @@ int push(double value) {
     stackNode->next = STACK_ROOT;
     STACK_ROOT = stackNode;
 
-    ++size;
     if (peek() != value) return 2;
+
+    ++size;
     return 0;
 }
 /*
@@ -84,4 +85,5 @@ int main() {
     printf("Trying to pop... ");
     printf("Return %f\n", pop());
     return 0;
-}*/
+}
+*/

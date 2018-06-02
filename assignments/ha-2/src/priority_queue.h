@@ -5,7 +5,11 @@
 #ifndef HA_2_PRIORITY_QUEUE_H
 #define HA_2_PRIORITY_QUEUE_H
 
-int insert(double value, int key);
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int insert(double value, int priority);
 
 double extract_min();
 
