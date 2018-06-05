@@ -1,6 +1,10 @@
 #ifndef HA_2_BITMAP_H
 #define HA_2_BITMAP_H
 
+#include <math.h>
+#include <stdlib.h>
+#include <printf.h>
+
 void setBitByNumber(int *array, int bit, int position);
 
 int getBitByNumber(int *array, int position);

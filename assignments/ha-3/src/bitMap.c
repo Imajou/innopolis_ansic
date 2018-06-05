@@ -1,32 +1,102 @@
 #include "bitMap.h"
 
+#define LENGTH 32
+
+/**
+ * Sets {@param bit} with {@param position} in pointer {@param array}
+ * @param array Pointer
+ * @param bit Bit to set
+ * @param position Position of a bit
+ */
 void setBitByNumber(int *array, int bit, int position) {
-    // array - pointer to the begining of the array
-    // position - number of the bit in the 'array'
-    // bit - have to be equal to 0 or 1
-    //
-    // this function changes bit with number 'position' to the 'bit'
+    if (array == NULL) {
+        printf("java.lang.NullPointerException");
+        return;
+    }
+    if ((bit != 1) && (bit != 0)) {
+        printf("java.lang.InvalidArgumentException");
+        return;
+    }
+    if (position < 0) {
+        printf("java.lang.ArrayIndexOutOfBoundException");
+        return;
+    }
 
-    /* YOUR CODE */
+    int wordIndex = position / LENGTH;
+    int bitIndex = position % LENGTH;
+
+    unsigned int word = (unsigned int) array[wordIndex];
+    unsigned int shift = (unsigned int) pow(2, LENGTH - bitIndex - 1);
+
+    if (bit == 0) word = word & (0xFFFFFFFF - shift);
+    else if ((word & shift) == 0)
+        word += shift;
+
+    array[wordIndex] = word;
 }
 
+/**
+ * Gets bit on {@param position} in pointer {@param array}
+ * @param array Pointer
+ * @param position Position of a bit
+ * @return Needed bit or -INF if error
+ */
 int getBitByNumber(int *array, int position) {
-    // this function returns position's bit from the array
+    if (array == NULL) {
+        printf("java.lang.NullPointerException");
+        return -INFINITY;
+    }
+    if (position < 0) {
+        printf("java.lang.ArrayIndexOutOfBoundException");
+        return -INFINITY;
+    }
 
-    /* YOUR CODE */
+    unsigned int wordIndex = (unsigned) position / LENGTH;
+    unsigned int bitIndex = (unsigned) position % LENGTH;
+
+    unsigned int getMask = (unsigned int) array[wordIndex] & (unsigned int) pow(2, LENGTH - bitIndex - 1);
+    unsigned int getBit = getMask >> (LENGTH - bitIndex - 1);
+
+    return getBit;
 }
 
+/**
+ * Set {@param bit} as the first bit on pointer {@param position}
+ * @param position Pointer
+ * @param bit Bit to set
+ */
 void setBitByAddress(void *position, int bit) {
-    // position - pointer to the bit to change
-    // bit - have to be equal to 0 or 1
-    //
-    // this function changes bit by memory address to 'bit'
+    if (position == NULL) {
+        printf("java.lang.NullPointerException");
+        return;
+    }
+    if ((bit != 1) && (bit != 0)) {
+        printf("java.lang.InvalidArgumentException");
+        return;
+    }
 
-    /* YOUR CODE */
+    unsigned int *word = (unsigned int *) position;
+
+    if (bit == 0) *word = (*word) & (unsigned int) 0x7FFFFFFF;
+    else if (!((*word) & 0x80000000))
+        *word += (unsigned int) pow(2, 31);
+
 }
 
+/**
+ * Gets the first bit on specified {@param position} pointer
+ * @param position Pointer
+ * @return Needed bit or -INF if error
+ */
 int getBitByAddress(void *position) {
-    // this function returns first bit by memory address 'position'
 
-    /* YOUR CODE */
+    if (position == NULL) {
+        printf("java.lang.NullPointerException");
+        return -INFINITY;
+    }
+
+    unsigned int getMask = (unsigned int) (*(int *) position) & 0x80000000;
+    unsigned int getBit = getMask >> (unsigned int) (LENGTH - 1);
+
+    return getBit;
 }
