@@ -1,26 +1,81 @@
 #include <check.h>
+#include <stdlib.h>
+#include <printf.h>
+#include <bitMap.h>
 
 START_TEST (test_setBitByNumber)
     {
-        //YOUR CODE HERE
+        int *ptr = malloc(8 * sizeof(int));
+        for (int i = 0; i < 8; ++i) {
+            ptr[i] = 0;
+        }
+        for (int j = 0; j < 8; ++j) {
+            printf("%d", ptr[j]);
+        }
+        setBitByNumber(ptr, 1, 0);
+        setBitByNumber(ptr, 1, 1);
+        setBitByNumber(ptr, 1, 2);
+        setBitByNumber(ptr, 1, 3);
+
+        ck_assert_int_eq(getBitByNumber(ptr, 0), 1);
+        ck_assert_int_eq(getBitByNumber(ptr, 1), 1);
+        ck_assert_int_eq(getBitByNumber(ptr, 2), 1);
+        ck_assert_int_eq(getBitByNumber(ptr, 3), 1);
+
+        ck_assert_int_eq(getBitByNumber(ptr, 4), 0);
     }
 END_TEST
 
 START_TEST (test_getBitByNumber)
     {
-        //YOUR CODE HERE
+        unsigned int *ptr = malloc(8 * sizeof(int));
+        for (int i = 0; i < 8; ++i) {
+            ptr[i] = 0;
+        }
+        for (int j = 0; j < 8; ++j) {
+            printf("%d", ptr[j]);
+        }
+        ptr[0] = 0xF0000000;
+
+        ck_assert_int_eq(getBitByNumber(ptr, 0), 1);
+        ck_assert_int_eq(getBitByNumber(ptr, 1), 1);
+        ck_assert_int_eq(getBitByNumber(ptr, 2), 1);
+        ck_assert_int_eq(getBitByNumber(ptr, 3), 1);
+
+        ck_assert_int_eq(getBitByNumber(ptr, 4), 0);
+
     }
 END_TEST
 
 START_TEST (test_setBitByAddress)
     {
-        //YOUR CODE HERE
+        int *ptr = malloc(8 * sizeof(int));
+        for (int i = 0; i < 8; ++i) {
+            ptr[i] = 0;
+        }
+        for (int j = 0; j < 8; ++j) {
+            printf("%d", ptr[j]);
+        }
+        setBitByAddress(ptr, 1);
+        ck_assert_int_eq(ptr[0], INT32_MIN);
     }
 END_TEST
 
 START_TEST (test_getBitByAddress)
     {
-        //YOUR CODE HERE
+        unsigned int *ptr = malloc(8 * sizeof(int));
+        for (int i = 0; i < 8; ++i) {
+            ptr[i] = 0;
+        }
+        for (int j = 0; j < 8; ++j) {
+            printf("%d", ptr[j]);
+        }
+        ptr[0] = 0xF0000000;
+        ptr[1] = 0xF0000000;
+
+        ck_assert_int_eq(getBitByAddress(ptr), 1);
+        ck_assert_int_eq(getBitByAddress(ptr + 1), 1);
+        ck_assert_int_eq(getBitByAddress(ptr + 2), 0);
     }
 END_TEST
 

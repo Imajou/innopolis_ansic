@@ -100,3 +100,20 @@ int getBitByAddress(void *position) {
 
     return getBit;
 }
+
+/*
+int main(){
+    int * ptr = malloc(8 * sizeof(int));
+    for (int i = 0; i < 8; ++i) {
+        ptr[i] = 0;
+    }
+    for (int j = 0; j < 8; ++j) {
+        printf("%d", ptr[j]);
+    }
+    printf("\n");
+    setBitByAddress(ptr, 1);
+    for (int j = 0; j < 8; ++j) {
+        printf("%d", ptr[j]);
+    }
+    return 0;
+}*/
